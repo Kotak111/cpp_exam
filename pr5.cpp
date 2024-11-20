@@ -1,47 +1,60 @@
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
-class Complex {
-private:
-    double real;
-    double imag;
-
+class Calculator {
 public:
-   
-    Complex(double r = 0, double i = 0) : real(r), imag(i) {}
-
     
-    Complex operator-(const Complex& other) const {
-        return Complex(real - other.real, imag - other.imag);
+    double add(double a, double b) {
+        return a + b;
     }
 
     
-    void display() const {
-        cout << real;
-        if (imag >= 0) {
-            cout << " + " << imag << "i";
-        } else {
-            cout << " - " << -imag << "i";
+    double subtract(double a, double b) {
+        return a - b;
+    }
+
+    
+    double multiply(double a, double b) {
+        return a * b;
+    }
+
+    
+    double divide(double a, double b) {
+        if (b == 0) {
+            throw runtime_error("Division by zero is not allowed.");
         }
+        return a / b;
     }
 };
 
 int main() {
-   
-    Complex c1(4, 7); 
-    Complex c2(2, 5); 
+    Calculator calc;
 
-   
-    Complex result = c1 - c2;
+    try {
+        
+        cout << "Addition (10 + 5): " << calc.add(10, 5) << endl;
 
-    
-    cout << "First Complex Number: ";
-    c1.display();
-    cout << "\nSecond Complex Number: ";
-    c2.display();
-    cout << "\nResult of Subtraction: ";
-    result.display();
-    cout << endl;
+        
+        cout << "Subtraction (10 - 5): " << calc.subtract(10, 5) << endl;
+
+        
+        cout << "Multiplication (10 * 5): " << calc.multiply(10, 5) << endl;
+
+        
+        cout << "Division (10 / 2): " << calc.divide(10, 2) << endl;
+
+        
+        cout << "Division (10 / 0): " << calc.divide(10, 0) << endl;
+    } catch (const runtime_error& e) {
+        
+        cerr << "Error: " << e.what() << endl;
+    } catch (const exception& e) {
+        
+        cerr << "An unexpected error occurred: " << e.what() << endl;
+    }
+
+    cout << "Program continues after exception handling..." << endl;
 
     return 0;
 }

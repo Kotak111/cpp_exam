@@ -1,62 +1,47 @@
 #include <iostream>
 #include <string>
-#include <vector>
 
 using namespace std;
 
-class Person {
+class BankAccount {
 private:
-    string name;
-    int age;
-    string address;
+    string accountNumber;
+    double balance;
+    string ownerName;
 
 public:
-    // Parameterized constructor
-    Person(const string& name, int age, const string& address) {
-        this->name = name;
-        this->age = age;
-        this->address = address;
+    BankAccount(const string& accountNumber, const string& ownerName, double initialBalance) {
+        this->accountNumber = accountNumber;
+        this->ownerName = ownerName;
+        this->balance = initialBalance; 
+
     }
 
-    // Getter methods
-    string getName() const { return name; }
-    int getAge() const { return age; }
-    string getAddress() const { return address; }
+    void credit(double amount) {
+        balance += amount;
+    }
+
+    void debit(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+        } else {
+            cout << "Insufficient balance" << endl;
+        }
+    }
+
+    void displayBalance() const {
+        cout << "Account Number: " << accountNumber << endl;
+        cout << "Owner Name: " << ownerName << endl;
+        cout << "Balance: " << balance << endl;
+    }
 };
 
 int main() {
-    int N;
-    cout << "Enter the number of persons: ";
-    cin >> N;
+    BankAccount account("12345", "Alice", 1000.0);
 
-    vector<Person> persons; // Vector to store Person objects
-
-    for (int i = 0; i < N; ++i) {
-        string name, address;
-        int age;
-
-        cout << "Enter details for person " << i + 1 << ":" << endl;
-        cout << "Name: ";
-        cin.ignore(); // Clear the input buffer
-        getline(cin, name);
-        cout << "Age: ";
-        cin >> age;
-        cin.ignore();
-        cout << "Address: ";
-        getline(cin, address);
-
-        // Add a new Person object to the vector
-        persons.emplace_back(name, age, address);
-    }
-
-    cout << "\nPerson Details:\n";
-    for (int i = 0; i < N; ++i) {
-        cout << "Person " << i + 1 << ":" << endl;
-        cout << "Name: " << persons[i].getName() << endl;
-        cout << "Age: " << persons[i].getAge() << endl;
-        cout << "Address: " << persons[i].getAddress() << endl;
-        cout << endl;
-    }
+    account.credit(500.0);
+    account.debit(200.0);
+    account.displayBalance();
 
     return 0;
 }

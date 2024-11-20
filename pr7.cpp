@@ -1,72 +1,50 @@
 #include <iostream>
-#include <cmath>
+
 using namespace std;
 
-
-class Shape {
+class Vehicle {
 public:
-   
-    virtual double area() const = 0;
-    virtual void draw() const = 0;
-
-   
-    virtual ~Shape() {}
+    virtual void startEngine() = 0;
+    virtual void drive() = 0;
 };
 
-
-class Circle : public Shape {
-private:
-    double radius;
-
+class Car : public Vehicle {
 public:
-    Circle(double r) : radius(r) {}
-
-    double area() const override {
-        return M_PI * radius * radius;
+    void startEngine() override {
+        cout << "Car engine started." << endl;
     }
 
-    void draw() const override {
-        cout << "Drawing a Circle with radius " << radius << endl;
+    void drive() override {
+        cout << "Car is driving." << endl;
     }
 };
 
-
-class Rectangle : public Shape {
-private:
-    double length, width;
-
+class Bike : public Vehicle {
 public:
-    Rectangle(double l, double w) : length(l), width(w) {}
-
-    double area() const override {
-        return length * width;
+    void startEngine() override {
+        cout << "Bike engine started." << endl;
     }
 
-    void draw() const override {
-        cout << "Drawing a Rectangle with length " << length
-             << " and width " << width << endl;
+    void drive() override {
+        cout << "Bike is driving." << endl;
     }
 };
 
 int main() {
-   
-    Shape* shapes[2];
+    Vehicle* vehicles[2];
 
-    
-    shapes[0] = new Circle(5.0);         
-    shapes[1] = new Rectangle(4.0, 6.0); 
+    vehicles[0] = new Car();
+    vehicles[1] = new Bike();
 
-    
     for (int i = 0; i < 2; ++i) {
-        cout << "Shape " << i + 1 << ":" << endl;
-        shapes[i]->draw();
-        cout << "Area: " << shapes[i]->area() << endl;
+        vehicles[i]->startEngine();
+        vehicles[i]->drive();
         cout << endl;
     }
 
-   
+    
     for (int i = 0; i < 2; ++i) {
-        delete shapes[i];
+        delete vehicles[i];
     }
 
     return 0;

@@ -1,54 +1,98 @@
 #include <iostream>
-#include <string>
-
+#include <cmath>
 using namespace std;
 
-class Animal {
+// Base class Shape
+class Shape {
 private:
-    string name;
-    string sound;
+    string color;
+    double area;
 
 public:
-    void setName(const string& newName) {
-        name = newName;
+    
+    Shape(const string& c) : color(c), area(0) {}
+
+    
+    void setColor(const string& c) {
+        color = c;
     }
 
-    string getName() const {
-        return name;
+    string getColor() const {
+        return color;
     }
 
-    void setSound(const string& newSound) {
-        sound = newSound;
+    // Getter for area
+    double getArea() const {
+        return area;
     }
 
-    string getSound() const {
-        return sound;
+    
+protected:
+    void setArea(double a) {
+        area = a;
     }
 };
 
-class Dog : public Animal {
+
+class Circle : public Shape {
+private:
+    double radius;
+
 public:
-    void makeSound() {
-        cout << getName() << " says: Woof!" << endl;
+    
+    Circle(const string& color, double r) : Shape(color), radius(r) {}
+
+   
+    void calculateArea() {
+        setArea(M_PI * radius * radius);
+    }
+
+   
+    void displayDetails() {
+        cout << "Circle Details:\n";
+        cout << "Color: " << getColor() << endl;
+        cout << "Radius: " << radius << endl;
+        cout << "Area: " << getArea() << endl;
     }
 };
 
-class Cat : public Animal {
+// Derived class Rectangle
+class Rectangle : public Shape {
+private:
+    double length, width;
+
 public:
-    void makeSound() {
-        cout << getName() << " says: Meow!" << endl;
+    
+    Rectangle(const string& color, double l, double w)
+        : Shape(color), length(l), width(w) {}
+
+   
+    void calculateArea() {
+        setArea(length * width);
+    }
+
+    
+    void displayDetails() {
+        cout << "Rectangle Details:\n";
+        cout << "Color: " << getColor() << endl;
+        cout << "Length: " << length << endl;
+        cout << "Width: " << width << endl;
+        cout << "Area: " << getArea() << endl;
     }
 };
 
 int main() {
-    Dog dog;
-    Cat cat;
+    
+    Circle circle("Red", 5.0);
+    circle.calculateArea();
+    circle.displayDetails();
 
-    dog.setName("Buddy");
-    cat.setName("Whiskers");
+    cout << endl;
 
-    dog.makeSound();
-    cat.makeSound();
+    
+    Rectangle rectangle("Blue", 4.0, 6.0);
+    rectangle.calculateArea();
+    rectangle.displayDetails();
 
     return 0;
 }

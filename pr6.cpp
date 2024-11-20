@@ -1,43 +1,57 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 class FileManager {
 public:
-    // Method to read data from a file
-    void readFromFile(const string& fileName) {
-        ifstream file(fileName);
-
-        // Check if file opened successfully
-        if (!file.is_open()) {
-            throw runtime_error("Error: Could not open the file '" + fileName + "'.");
+    bool writeToFile(const string& filename, const string& data) {
+        ofstream outfile(filename);
+        if (!outfile.is_open()) {
+            cerr << "Error opening file: " << filename << endl;
+            return false;
         }
 
+        outfile << data;
+        outfile.close();
+        return true;
+    }
+
+    string readFile(const string& filename) {
+        ifstream infile(filename);
+        if (!infile.is_open()) {
+            cerr << "Error opening file: " << filename << endl;
+            return "";
+        }
+
+        string data;
         string line;
-        cout << "Reading data from file: " << fileName << "\n\n";
-
-        while (getline(file, line)) {
-            cout << line << endl;
+        while (getline(infile, line)) {
+            data += line + "\n";
         }
-
-        file.close();
+        infile.close();
+        return data;
     }
 };
 
 int main() {
     FileManager fileManager;
-    string fileName;
 
-    cout << "Enter the file name to read: ";
-    cin >> fileName;
+    // Write data to a file
+    string dataToWrite = "This is some data to write to the file.";
+    if (fileManager.writeToFile("data.txt", dataToWrite)) {
+        cout << "Data written to file successfully." << endl;
+    } else {
+        cout << "Error writing to file." << endl;
+    }
 
-    try {
-        
-        fileManager.readFromFile(fileName);
-    } catch (const runtime_error& e) {
-        
-        cerr << e.what() << endl;
+    // Read data from the file
+    string dataFromFile = fileManager.readFile("data.txt");
+    if (!dataFromFile.empty()) {
+        cout << "Data read from file: " << endl << dataFromFile << endl;
+    } else {
+        cout << "Error reading from file." << endl;
     }
 
     return 0;

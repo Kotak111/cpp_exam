@@ -36,7 +36,7 @@
 <br>
 
 
-![Demo App](./images/pr5.png)
+![Demo App](./images/cpp5.png)
 <br>
 
 <h1 align="center">Program 6</h1>

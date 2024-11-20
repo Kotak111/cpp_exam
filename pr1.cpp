@@ -1,43 +1,39 @@
 #include <iostream>
 #include <string>
-
 using namespace std;
 
+class Laptop {
+private:
+    string name;
+    double price;
+    string processor;
 
-class Book {
 public:
-    string title;
-    string author;
-    int publishedYear;
+    
+    Laptop(const string& n, double p, const string& proc)
+        : name(n), price(p), processor(proc) {}
 
     
-    Book(string t, string a, int y) : title(t), author(a), publishedYear(y) {}
-
-   
-    void display() {
-        cout << "Title: " << title << endl;
-        cout << "Author: " << author << endl;
-        cout << "Published Year: " << publishedYear << endl;
+    void displayDetails() const {
+        cout << "Laptop Name: " << name << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Processor: " << processor << endl;
     }
 };
 
 int main() {
-    
-    Book books[] = {
-        Book("The Great Gatsby", "F. Scott Fitzgerald", 1925),
-        Book("1984", "George Orwell", 1949),
-        Book("To Kill a Mockingbird", "Harper Lee", 1960)
-    };
+   
+    Laptop laptop1("Dell XPS 13", 1200.99, "Intel Core i7");
+    Laptop laptop2("MacBook Pro", 2499.99, "Apple M1 Pro");
+    Laptop laptop3("HP Spectre x360", 1499.99, "Intel Core i5");
 
     
-    int size = sizeof(books) / sizeof(books[0]);
-
-    
-    for (int i = 0; i < size; ++i) {
-        cout << "Book " << i + 1 << " details:" << endl;
-        books[i].display();
-        cout << endl;
-    }
+    cout << "Laptop 1 Details:\n";
+    laptop1.displayDetails();
+    cout << "\nLaptop 2 Details:\n";
+    laptop2.displayDetails();
+    cout << "\nLaptop 3 Details:\n";
+    laptop3.displayDetails();
 
     return 0;
 }
